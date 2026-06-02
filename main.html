@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Literatura Brasileira — Feed</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<!--
+╔══════════════════════════════════════════════════════════════╗
+║           LITERATURA BRASILEIRA — FEED INTERATIVO           ║
+║                 Projeto 3° Ano EMTI · 2025                  ║
+╠══════════════════════════════════════════════════════════════╣
+║  ONDE VOCÊS DEVEM MEXER:                                    ║
+║  ✅ Seção "DADOS DO PERFIL" (perfil do escritor)            ║
+║  ✅ Seção "DESTAQUES" (conteúdo dos modais)                 ║
+║  ✅ Seção "STORIES" (imagens e vídeos)                      ║
+║  ✅ Seção "POSTS DO FEED" (imagens e legendas)              ║
+║  ✅ Hashtags nas .post-tags                                 ║
+║  ✅ Comentários nos posts                                   ║
+║                                                             ║
+║  ONDE NÃO MEXER (a não ser que saibam o que estão fazendo): ║
+║  ❌ Variáveis CSS no :root e nos [data-theme]               ║
+║  ❌ Funções JavaScript (openStory, openHighlight, etc.)     ║
+║  ❌ Estrutura dos modais (.modal-overlay, .modal-box)       ║
+║  ❌ Sistema de temas (.theme-bar, setTheme)                 ║
+║  ❌ Responsividade (@media queries)                         ║
+╚══════════════════════════════════════════════════════════════╝
+-->
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     BARRA DE TEMAS — NÃO EDITAR
+     ══════════════════════════════════════════════════════════ -->
+<div class="theme-bar">
+  <span class="theme-bar-title">📚 Rafael Montes | Feed Literário</span>
+  <div class="theme-btns">
+    <button class="theme-btn active" onclick="setTheme('claro', this)">☀️ Claro</button>
+    <button class="theme-btn" onclick="setTheme('noite', this)">🌙 Noite</button>
+    <button class="theme-btn" onclick="setTheme('verde', this)">🌿 Verde</button>
+    <button class="theme-btn" onclick="setTheme('azul', this)">🌊 Azul</button>
+  </div>
+</div>
+
+<div class="insta-wrapper">
+
+  <!-- ══════════════════════════════════════════════════════════
+       ✅ DADOS DO PERFIL — EDITE AQUI
+       Preencha com as informações do escritor escolhido
+       ══════════════════════════════════════════════════════════ -->
+  <div class="profile-header">
+    <div class="profile-top">
+      <div class="profile-avatar">
+        <div class="profile-avatar-inner" id="profile-avatar-content">
+          <!--
+            ✅ FOTO DO ESCRITOR:
+            Substitua o emoji abaixo por:
+            <img src="URL_DA_FOTO" alt="Nome do Escritor">
+            
+            Dica: busque a foto no Wikimedia Commons (gratuito e sem direitos autorais)
+            Exemplo: <img src="https://upload.wikimedia.org/..." alt="Machado de Assis">
+          -->
+          <img src="rafael1.jpg" alt="Foto de perfil do autor">
+        </div>
+      </div>
+
+      <div class="profile-stats">
+        <div class="stat">
+          <!--
+            ✅ Atualize este número conforme a quantidade de posts que vocês criarem
+          -->
+          <span class="stat-num" id="stat-posts">3</span>
+          <span class="stat-label">publicações</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">171</span><!-- Deixe como curiosidade ou coloque um número fictício divertido -->
+          <span class="stat-label">seguidores</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">170</span>
+          <span class="stat-label">seguindo</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-info">
+      <!--
+        ✅ NOME COMPLETO DO ESCRITOR
+        Exemplo: Machado de Assis
+      -->
+      <div class="profile-name" id="profile-name">Raphael Montes de Carvalho</div>
+
+      <!--
+        ✅ PERÍODO LITERÁRIO E DATAS
+        Exemplo: Realismo · 1839 – 1908
+      -->
+      <div class="profile-period" id="profile-period">Contemporâneo · 1990 – Ano falecimento</div>
+
+      <!--
+        ✅ MINI BIOGRAFIA
+        Escreva 2-3 linhas sobre o escritor: geração, estilo, principais contribuições.
+        Use emojis para deixar mais dinâmico!
+      -->
+      <div class="profile-bio" id="profile-bio">
+      Raphael Montes de Carvalho (nascido em 22 de setembro de 1990) é um romancista policial e advogado brasileiro . Ele foi duas vezes finalista do Prêmio Jabuti , vencendo uma vez.<br>
+      Rio de Janeiro - RJ
+      </div>
+
+      <!--
+        ✅ LINK DA OBRA PRINCIPAL
+        Pode ser um link para a obra no Domínio Público (domíniopublico.gov.br)
+        ou para a página do escritor na Academia Brasileira de Letras
+        Exemplo: <a href="https://..." class="profile-link" id="profile-link">📖 Dom Casmurro (1899)</a>
+      -->
+      <a href="https://www.amazon.com.br/Jantar-secreto-Raphael-Montes/dp/8535928359/ref=sr_1_1?adgrpid=161046237998&dib=eyJ2IjoiMSJ9.tH3p7qZxb7U0XmLirYr2GPBcud1yDJx-OF9KG3JUkMPHhW3NeB9wVhp7NA4vVhccZa_FG3nAOskOqz-1XTAP_x5mZ012S18MLafDEUy1fX58g9ngNrLC89fJv8oAtU0IA0g0IqHRpfRKmoQI57V1TLfk9NjrLFgFcuHC1jWsuRzO0RPgyk_B20czJkdV4eIW0FwVFZwVLUd2rnaLTFDkO3IrCRd30dbJKRGH790g8eOBrpZ6trx7iZFhWoX-rRNHYE8ma1ttDD6qxY9WqSmC0dODp4MDlWLLpyyaVIc1QFw.4pzKqOjCbsqkb8nExwuB--HHjezU62s0uR1w3BynNHc&dib_tag=se&hvadid=694526301013&hvdev=c&hvexpln=0&hvlocphy=20094&hvnetw=g&hvocijid=15751922284487340210--&hvqmt=e&hvrand=15751922284487340210&hvtargid=kwd-949393536617&hydadcr=18442_13491915&keywords=jantar+secreto+livro&mcid=8dc1d94c665d3f1fbb1107d21f77eb2e&qid=1779716543&sr=8-1" class="profile-link" id="profile-link">🔗 Obra principal ou obra mais conhecida</a>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       ✅ STORIES — EDITE AQUI
+       Cada story-item abre um modal com a mídia em tela cheia.
+       Você pode usar imagens estáticas ou vídeos curtos.
+       ══════════════════════════════════════════════════════════ -->
+  <div class="stories-section">
+    <div class="stories-section-label">Stories</div>
+    <div class="stories-bar">
+      <div class="stories-inner" id="stories-container">
+
+        <!--
+          ══════════════════════════════════════════════
+          COMO ADICIONAR UM STORY:
+
+          <div class="story-item" onclick="openStory(this)"
+               data-media="URL_DA_IMAGEM_OU_VIDEO"
+               data-type="image"     (ou "video")
+               data-caption="Legenda que aparece embaixo da mídia"
+               data-label="Rótulo abaixo do círculo">
+            <div class="story-ring">
+              <div class="story-inner">
+                COLOQUE UMA MINIATURA AQUI:
+                <img src="URL_MINIATURA" alt="...">
+                OU um emoji representativo
+              </div>
+            </div>
+            <span class="story-label">Rótulo</span>
+          </div>
+
+          DICAS:
+          - data-type="image"  → para fotos (jpg, png, webp)
+          - data-type="video"  → para vídeos curtos (mp4)
+          - O story some automaticamente após 5 segundos
+          - Toque/clique na metade direita para avançar
+          - Toque/clique na metade esquerda para voltar
+          ══════════════════════════════════════════════
+        -->
+
+        <!-- STORY 1 -->
+        <div class="story-item" onclick="openStory(this)"
+             data-media="story (1).jpg"
+             data-type="image"
+             data-caption="Trecho do livro novo."
+             data-label="Story 1">
+          <div class="story-ring">
+            <div class="story-inner">
+              <!--
+                ✅ MINIATURA DO STORY 1
+                Substitua o emoji por: <img src="URL_DA_IMAGEM" alt="...">
+                E preencha data-media="" com a URL da imagem ou vídeo completo
+              -->
+              <img src="story (1).jpg" alt="Capa do primeiro story.">
+            </div>
+          </div>
+          <span class="story-label">Story 1</span>
+        </div>
+
+        <!-- STORY 2 -->
+        <div class="story-item" onclick="openStory(this)"
+             data-media="story (2).jpg"
+             data-type="image"
+             data-caption="O que será que vem por aí?"
+             data-label="Story 2">
+          <div class="story-ring">
+            <div class="story-inner"><img src="story (2).jpg" alt="Capa do segundo story"></div>
+          </div>
+          <span class="story-label">Story 2</span>
+        </div>
+
+        <!-- STORY 3 -->
+        <div class="story-item" onclick="openStory(this)"
+             data-media="story (3).jpg"
+             data-type="image"
+             data-caption="Lançamento do livro Jantar Secreto"
+             data-label="Story 3">
+          <div class="story-ring">
+            <div class="story-inner"><img src="story (3).jpg" alt="Capa do terceiro story"></div>
+          </div>
+          <span class="story-label">Story 3</span>
+        </div>
+
+        <!--
+          ✅ Para adicionar mais stories, copie um bloco acima e cole aqui
+        -->
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       ✅ DESTAQUES — EDITE AQUI
+       Cada destaque abre um modal com conteúdo rico.
+       Clique em cada um para ver o exemplo de estrutura.
+       ══════════════════════════════════════════════════════════ -->
+  <div class="highlights-section">
+    <div class="highlights-label">Destaques</div>
+    <div class="highlights-bar">
+
+      <!-- DESTAQUE: OBRAS -->
+      <div class="highlight-item" onclick="openHighlight('obras')">
+        <div class="highlight-ring">
+          <!--
+            ✅ CAPA DO DESTAQUE "OBRAS"
+            Substitua o emoji por: <img src="URL_DA_IMAGEM" alt="Obras">
+          -->
+          🖊️
+        </div>
+        <span class="highlight-label">Obras</span>
+      </div>
+
+      <!-- DESTAQUE: VIDA -->
+      <div class="highlight-item" onclick="openHighlight('vida')">
+        <div class="highlight-ring">🏛️</div>
+        <span class="highlight-label">Vida</span>
+      </div>
+
+      <!-- DESTAQUE: FRASES -->
+      <div class="highlight-item" onclick="openHighlight('frases')">
+        <div class="highlight-ring">💬</div>
+        <span class="highlight-label">Frases</span>
+      </div>
+
+      <!-- DESTAQUE: CONTEXTO HISTÓRICO -->
+      <div class="highlight-item" onclick="openHighlight('contexto')">
+        <div class="highlight-ring">📜</div>
+        <span class="highlight-label">Contexto</span>
+      </div>
+
+      <!-- DESTAQUE: PRÊMIOS E LEGADO -->
+      <div class="highlight-item" onclick="openHighlight('legado')">
+        <div class="highlight-ring">🏆</div>
+        <span class="highlight-label">Legado</span>
+      </div>
+
+      <!--
+        ✅ Para adicionar mais destaques, copie um bloco acima e:
+        1. Mude o onclick para openHighlight('minha-secao')
+        2. Adicione o conteúdo do modal na seção de MODAIS DE DESTAQUE abaixo
+      -->
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       ✅ FEED DE POSTS — EDITE AQUI
+       ══════════════════════════════════════════════════════════ -->
+  <div class="posts-feed">
+
+    <!-- ══════════════════════════════════════════════════════════
+         POST 1
+         ══════════════════════════════════════════════════════════ -->
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-avatar">
+          <div class="post-avatar-inner">
+            <!--
+              ✅ FOTO DO ESCRITOR NO POST (pequena)
+              Substitua por: <img src="URL_DA_FOTO" alt="Nome">
+              Ou use a inicial do nome: M (para Machado, por ex.)
+            -->
+            <img src="rafael1.jpg" alt="Foto de perfil">
+          </div>
+        </div>
+        <div class="post-user-info">
+          <div class="post-username">
+            <!--
+              ✅ USERNAME e PERÍODO LITERÁRIO
+              Exemplo: @machadodeassis
+            -->
+            @rafael_montes
+            <span class="periodo-badge">Literatura Contemporânea</span><!-- ex: Realismo, Romantismo, Modernismo... -->
+          </div>
+          <!--
+            ✅ LOCALIZAÇÃO E ANOS
+            Exemplo: Rio de Janeiro, RJ · 1839–1908
+          -->
+          <div class="post-location">São Paulo, SP · Há 1 hora</div>
+        </div>
+        <div class="post-menu">···</div>
+      </div>
+
+      <!--
+        ✅ IMAGEM DO POST 1
+        Substitua todo este bloco por:
+        <img src="URL_DA_IMAGEM" alt="Descrição" class="post-image">
+
+        Sugestões de imagem para o 1° post:
+        - Retrato do escritor
+        - Capa da obra principal
+        - Ilustração do período literário
+      -->
+      <div class="post-image-placeholder">
+        <img src="vida.png" alt="Imagem do post 1">
+      </div>
+
+      <div class="post-actions">
+        <button class="post-action-btn" onclick="toggleLike(this)" title="Curtir">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+        <button class="post-action-btn" title="Comentar" onclick="this.closest('.post-card').querySelector('.post-comments-preview').scrollIntoView({behavior:'smooth'})">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </button>
+        <button class="post-action-btn" title="Compartilhar" onclick="sharePost(this)">
+          <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+        <button class="post-action-btn post-save-btn" title="Salvar" onclick="toggleSave(this)">
+          <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+
+      <div class="post-likes">🤍 Seja o primeiro a curtir</div>
+      <div class="post-caption">
+        <strong>@rafael_montes</strong>
+        <!--
+          ✅ LEGENDA DO POST 1
+          Sugestões:
+          - Uma citação famosa do autor
+          - Apresentação da obra principal
+          - Fato curioso sobre a vida do escritor
+          - Reflexão sobre o período literário
+          Use emojis! 📚✍️🌟
+        -->
+        Raphael Montes é um escritor, roteirista e advogado brasileiro, conhecido principalmente por seus romances de suspense, terror psicológico e investigação criminal. Nasceu no Rio de Janeiro em 1990 e ganhou destaque ainda jovem por criar histórias cheias de mistério, violência psicológica e críticas sociais. Entre suas obras mais famosas estão Jantar Secreto, Suicidas e Bom Dia, Verônica. ✨
+      </div>
+
+      <div class="post-tags">
+        <!--
+          ✅ EDITE AS HASHTAGS do post 1
+          Exemplo: #Realismo #MachadoDeAssis #DomCasmurro
+        -->
+        <span class="tag">#LiteraturaBrasileira</span>
+        <span class="tag">#Contemporânea</span>
+        <span class="tag">#RafaelMontes</span>
+        <span class="tag">#Suspense</span>
+      </div>
+
+      <div class="post-comments-preview">Ver todos os comentários</div>
+
+      <div class="post-comment">
+        <!--
+          ✅ EDITE OS COMENTÁRIOS
+          Podem ser comentários de colegas, do professor, ou personagens fictícios da época!
+        -->
+        <strong>@prof_literatura</strong>
+        Ótimo post! Que obra incrível! 📚
+      </div>
+
+      <div class="post-date">Há 30 minutos</div><!-- ✅ Ajuste a data -->
+    </div>
+    <!-- fim post 1 -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         POST 2
+         ══════════════════════════════════════════════════════════ -->
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-avatar">
+          <div class="post-avatar-inner"><img src="rafael1.jpg" alt="Imagem de perfil"><!-- ✅ Inicial ou <img src="..."> --></div>
+        </div>
+        <div class="post-user-info">
+          <div class="post-username">
+            @rafael_montes<!-- ✅ -->
+            <span class="periodo-badge">Literatura Contemporânea</span><!-- ✅ -->
+          </div>
+          <div class="post-location">Belo Horizonte, MG · Há 1 dia</div><!-- ✅ -->
+        </div>
+        <div class="post-menu">···</div>
+      </div>
+
+      <!--
+        ✅ IMAGEM DO POST 2
+        Sugestão: capa de uma obra específica, manuscrito, ou ilustração da época
+      -->
+      <div class="post-image-placeholder">
+        <img src="livro.png" alt="Imagem do post 2">
+      </div>
+
+      <div class="post-actions">
+        <button class="post-action-btn" onclick="toggleLike(this)" title="Curtir">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+        <button class="post-action-btn" title="Comentar">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </button>
+        <button class="post-action-btn" title="Compartilhar" onclick="sharePost(this)">
+          <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+        <button class="post-action-btn post-save-btn" title="Salvar" onclick="toggleSave(this)">
+          <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+
+      <div class="post-likes">🤍 Seja o primeiro a curtir</div>
+
+      <div class="post-caption">
+        <strong>@rafael_montes</strong>
+        <!-- ✅ LEGENDA DO POST 2: Uma obra específica, poema, trecho famoso ou momento da vida do escritor -->
+        📚🔪 Jantar Secreto, de Raphael Montes, é um suspense intenso que mistura mistério, crítica social e escolhas extremas. A obra mostra até onde alguém pode chegar em busca de dinheiro, sucesso e sobrevivência. 👀 Entre segredos, violência e tensão psicológica, o livro conquista leitores com uma narrativa envolvente e cheia de reviravoltas. ✨ Temas abordados: desigualdade social, ambição, moralidade, amizade, corrupção humana. Você teria coragem de descobrir o que acontece nesse jantar? 🍽️📖
+      </div>
+
+      <div class="post-tags">
+        <!-- ✅ EDITE AS HASHTAGS -->
+        <span class="tag">#LiteraturaBrasileira</span>
+        <span class="tag">#Bookstagram</span>
+        <span class="tag">#ThrillerBrasileiro</span>
+      </div>
+
+      <div class="post-comments-preview">Ver todos os comentários</div>
+
+      <div class="post-comment">
+        <strong>@leitor_apaixonado</strong>
+        Adorei esse autor! Muito representativo do período. 🌟
+      </div>
+
+      <div class="post-date">Há 12 horas </div>
+    </div>
+    <!-- fim post 2 -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         POST 3
+         ══════════════════════════════════════════════════════════ -->
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-avatar">
+          <div class="post-avatar-inner"><img src="rafael1.jpg" alt="Imagem de perfil"><!-- ✅ --></div>
+        </div>
+        <div class="post-user-info">
+          <div class="post-username">
+            @rafael_montes<!-- ✅ -->
+            <span class="periodo-badge">Literatura Contemporânea</span><!-- ✅ -->
+          </div>
+          <div class="post-location">Salvador, BA · Há 2 dias</div><!-- ✅ -->
+        </div>
+        <div class="post-menu">···</div>
+      </div>
+
+      <!--
+        ✅ IMAGEM DO POST 3
+        Sugestão: influências do escritor, relação com outros autores, impacto social
+      -->
+      <div class="post-image-placeholder">
+        <img src="legado.png " alt="Imagem do post 3">
+      </div>
+
+      <div class="post-actions">
+        <button class="post-action-btn" onclick="toggleLike(this)" title="Curtir">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+        <button class="post-action-btn" title="Comentar">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </button>
+        <button class="post-action-btn" title="Compartilhar" onclick="sharePost(this)">
+          <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+        <button class="post-action-btn post-save-btn" title="Salvar" onclick="toggleSave(this)">
+          <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+
+      <div class="post-likes">🤍 Seja o primeiro a curtir</div>
+
+      <div class="post-caption">
+        <strong>@usuario_do_escritor</strong>
+        <!-- ✅ LEGENDA DO POST 3: Legado, influências, impacto na sociedade brasileira -->
+        O REI DO THRILLER NACIONAL! 🔪🇧🇷Se você ama um bom suspense, precisa conhecer o legado de Raphael Montes. Ele revolucionou a literatura policial no Brasil e provou que o nosso país sabe fazer mistério com qualidade internacional! 🌍O que faz dele um fenômeno?📚 +1 Milhão de Livros Vendidos: Autor nacional recordista de vendas traduzido para mais de 25 países.🏆 Vencedor do Prêmio Jabuti: Reconhecimento máximo da literatura com "Uma Mulher no Escuro".🎬 Mestre do Audiovisual: Criador da série de sucesso "Bom Dia, Verônica" (Netflix) e da novela "Beleza Fatal".🧠 Suspense com Propósito: Suas histórias chocam, mas sempre debatem a mente humana e problemas sociais reais.Um verdadeiro orgulho da cultura brasileira contemporânea! ❤️💬 Me conta nos comentários: Qual livro ou série do Raphael Montes te deixou mais sem fôlego?👇
+      </div>
+
+      <div class="post-tags">
+        <!-- ✅ EDITE AS HASHTAGS -->
+        <span class="tag">#LiteraturaBrasileira</span>
+        <span class="tag">#BomDiaVeronica </span>
+        <span class="tag">#LivrosDeSuspense </span>
+        <span class="tag">#BookstagramBr</span>
+      </div>
+
+      <div class="post-comments-preview">Ver todos os comentários</div>
+
+      <div class="post-comment">
+        <strong>@turma_literatura</strong>
+        Que trabalho incrível! Parabéns! 🎉
+      </div>
+
+      <div class="post-date">Há 1 semana</div>
+    </div>
+    <!-- fim post 3 -->
+
+    <!--
+    ┌─────────────────────────────────────────────────────────┐
+    │  ✅ ADICIONAR MAIS POSTS?                               │
+    │  Copie um bloco "post-card" acima e cole aqui,         │
+    │  depois edite o conteúdo. Não esqueça de atualizar     │
+    │  o número em "stat-posts" no perfil!                   │
+    └─────────────────────────────────────────────────────────┘
+    -->
+
+  </div>
+  <!-- fim posts-feed -->
+
+  <!-- RODAPÉ -->
+  <div class="feed-footer">
+    <strong>Literatura Brasileira</strong> — Feed Interativo<br>
+    <!--
+      ✅ Edite: coloque o nome da turma e da escola
+      Exemplo: Turma 3°A · Escola Estadual João XXIII · 2025
+    -->
+    Projeto criado pela turma · Escola e Ano<br>
+    <span style="opacity: 0.4; font-size: 10px;">✏️ Edite este arquivo HTML para personalizar</span>
+  </div>
+
+</div><!-- fim insta-wrapper -->
+
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAIS DE DESTAQUE — ✅ EDITE O CONTEÚDO DENTRO DAS TAGS
+     Não altere a estrutura dos divs, apenas o texto interno
+     ══════════════════════════════════════════════════════════ -->
+
+<!-- MODAL: OBRAS -->
+<div class="modal-overlay" id="modal-obras" onclick="closeModalOnOverlay(event, this)">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div class="modal-icon">🖊️</div>
+      <div>
+        <div class="modal-title">Principais Obras</div>
+        <!--
+          ✅ Subtítulo do modal — exemplo: "A bibliografia de Machado de Assis"
+        -->
+        <div class="modal-subtitle">A bibliografia do escritor</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('obras')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <!--
+        ✅ PREENCHA ESTE MODAL COM AS OBRAS DO ESCRITOR
+        Copie e cole mais blocos "modal-obra-card" conforme necessário.
+
+        ESTRUTURA DE CADA OBRA:
+        <div class="modal-obra-card">
+          <div class="modal-obra-emoji">📘</div> (escolha um emoji adequado)
+          <div class="modal-obra-info">
+            <div class="modal-obra-title">Título da Obra (Ano)</div>
+            <div class="modal-obra-desc">Breve descrição da obra: gênero, tema, importância.</div>
+          </div>
+        </div>
+      -->
+
+      <div class="modal-section">
+        <div class="modal-section-title">Suspense</div>
+
+        <div class="modal-obra-card">
+          <div class="modal-obra-emoji">📘</div>
+          <div class="modal-obra-info">
+            <div class="modal-obra-title">Jantar Secreto</div>
+            <div class="modal-obra-desc">Descrição da obra: O Jantar Secreto, do autor brasileiro Raphael Montes, é um thriller de suspense psicológico que narra a história de quatro amigos do interior que se mudam para o Rio de Janeiro e, para evitar o despejo, começam a organizar jantares secretos servindo carne humana para a elite.</div>
+          </div>
+        </div>
+
+        <div class="modal-obra-card">
+          <div class="modal-obra-emoji">📗</div>
+          <div class="modal-obra-info">
+            <div class="modal-obra-title">Bom dia Verônica</div>
+            <div class="modal-obra-desc">Descrição da obra: Bom Dia, Verônica, escrito por Raphael Montes e Ilana Casoy (inicialmente sob o pseudônimo de Andrea Killmore), é um suspense policial brasileiro eletrizante. A trama acompanha Verônica, uma escrivã que decide investigar por conta própria uma rede de corrupção, violência contra a mulher e serial killers.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Romance</div>
+
+        <div class="modal-obra-card">
+          <div class="modal-obra-emoji">📜</div>
+          <div class="modal-obra-info">
+            <div class="modal-obra-title">Suicidas</div>
+            <div class="modal-obra-desc">Descrição da obra: Suicidas, romance de estreia do autor Raphael Montes, é um thriller psicológico sobre nove jovens da elite carioca que são encontrados mortos no porão da casa de um deles. As pistas apontam para um jogo macabro de roleta russa, e a investigação busca desvendar o que os levou a isso.</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: VIDA -->
+<div class="modal-overlay" id="modal-vida" onclick="closeModalOnOverlay(event, this)">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div class="modal-icon">🏛️</div>
+      <div>
+        <div class="modal-title">Biografia</div>
+        <!--
+          ✅ Subtítulo — exemplo: "A trajetória de vida de Machado de Assis"
+        -->
+        <div class="modal-subtitle">A trajetória de vida do escritor</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('vida')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <!--
+        ✅ PREENCHA COM A BIOGRAFIA DO ESCRITOR
+        Use a linha do tempo (timeline) para fatos importantes da vida dele.
+        Copie mais blocos "modal-timeline-item" conforme necessário.
+      -->
+
+      <div class="modal-section">
+        <div class="modal-section-title">Linha do Tempo</div>
+
+        <div class="modal-timeline-item">
+          <div class="modal-timeline-year">1990</div><!-- ✅ Ano de nascimento -->
+          <div class="modal-timeline-text">✅ Nasce no Rio de Janeiro. Desde a adolescência, demonstra paixão por histórias de mistério, escrevendo contos e fanfics.</div>
+        </div>
+
+        <div class="modal-timeline-item">
+          <div class="modal-timeline-year">2008</div><!-- ✅ Ano importante -->
+          <div class="modal-timeline-text">✅ Inicia a carreira literária publicando contos de mistério em antologias nacionais e na prestigiada revista americana Ellery Queen's Mystery Magazine.</div>
+        </div>
+
+        <div class="modal-timeline-item">
+          <div class="modal-timeline-year">2012</div><!-- ✅ -->
+          <div class="modal-timeline-text">✅ Publica oficialmente seu romance de estreia, Suicidas. O sucesso consolida seu nome e o impulsiona a abandonar a advocacia.</div>
+        </div>
+
+        <div class="modal-timeline-item">
+          <div class="modal-timeline-year">2014</div><!-- ✅ -->
+          <div class="modal-timeline-text">✅ Lança Dias Perfeitos, seu segundo livro, consolidando-se no mercado de thrillers e que se tornou um fenômeno internacional traduzido em mais de 20 idiomas.</div>
+        </div>
+
+        <div class="modal-timeline-item">
+          <div class="modal-timeline-year">2020</div><!-- ✅ Ano de falecimento -->
+          <div class="modal-timeline-text">✅ Obras em alta! Vence o Prêmio Jabuti com Uma mulher no escuro. Trabalha como criador, roteirista-chefe e produtor-executivo da adaptação de Bom Dia, Verônica (Netflix). Também assina o roteiro dos filmes A menina que matou os pais e O menino que matou meus pais.</div>
+        </div>
+
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Curiosidades</div>
+        <p>Método "Arquiteto" de escrita: Diferente de escritores que deixam a história fluir, ele se considera um "arquiteto". Ele planeja meticulosamente o início, o final e cada reviravolta da trama em uma lista de tópicos no Word antes de começar a redigir o texto.</p>
+        <p>Inspiração no terror real: O famoso livro O Jantar Secreto</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: FRASES -->
+<div class="modal-overlay" id="modal-frases" onclick="closeModalOnOverlay(event, this)">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div class="modal-icon">💬</div>
+      <div>
+        <div class="modal-title">Frases Marcantes</div>
+        <div class="modal-subtitle">As melhores citações do escritor</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('frases')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <!--
+        ✅ PREENCHA COM AS FRASES/CITAÇÕES DO ESCRITOR
+        Use o bloco "modal-quote" para cada citação.
+        Adicione após cada citação de qual obra ela veio.
+      -->
+
+      <div class="modal-section">
+        <div class="modal-section-title">Citações das Obras</div>
+
+        <div class="modal-quote">
+          "O ser humano é fascinado pela desgraça alheia."
+        </div>
+        <p style="font-size:11px; color: var(--text-muted); margin-top: -6px; margin-bottom: 14px;">— Suicidas, 2005</p>
+
+        <div class="modal-quote">
+          "Tudo na vida tem um começo, um meio e um f*da-se."
+        </div>
+        <p style="font-size:11px; color: var(--text-muted); margin-top: -6px; margin-bottom: 14px;">— O jantar secreto, 2016>
+
+        <div class="modal-quote">
+          "Perceba, Anatole, que nunca inseri o pecado ou o mal nas pessoas. O mal já estava lá. Eu apenas o potencializei."
+        </div>
+        <p style="font-size:11px; color: var(--text-muted); margin-top: -6px; margin-bottom: 14px;">—O Vilarejo, 2015</p>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: CONTEXTO HISTÓRICO -->
+<div class="modal-overlay" id="modal-contexto" onclick="closeModalOnOverlay(event, this)">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div class="modal-icon">📜</div>
+      <div>
+        <div class="modal-title">Contexto Histórico</div>
+        <div class="modal-subtitle">Brasil e mundo na época do escritor</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('contexto')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <!--
+        ✅ PREENCHA COM O CONTEXTO HISTÓRICO DO PERÍODO
+        Fale sobre: o que acontecia no Brasil e no mundo enquanto o escritor vivia?
+        Que movimentos sociais, políticos e culturais influenciaram sua obra?
+      -->
+
+      <div class="modal-section">
+        <div class="modal-section-title">O Brasil na época</div>
+        <p>✅ Descreva o Brasil no período em que o escritor viveu: era Imperial? República? Que transformações sociais e políticas aconteciam?</p>
+        <p>✅ Como essas transformações aparecem ou influenciam a obra do escritor?</p>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">O Movimento Literário</div>
+        <p>✅ Explique o período literário ao qual o escritor pertence: Romantismo, Realismo, Naturalismo, Parnasianismo, Simbolismo, Modernismo...</p>
+        <p>✅ Quais são as principais características desse movimento? Como elas aparecem na obra do escritor escolhido?</p>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Outros Autores do Período</div>
+        <p>✅ Cite outros escritores contemporâneos e como se relacionavam com o escritor escolhido.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: LEGADO -->
+<div class="modal-overlay" id="modal-legado" onclick="closeModalOnOverlay(event, this)">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div class="modal-icon">🏆</div>
+      <div>
+        <div class="modal-title">Prêmios e Legado</div>
+        <div class="modal-subtitle">A importância do escritor até hoje</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('legado')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <!--
+        ✅ PREENCHA COM PRÊMIOS, RECONHECIMENTOS E LEGADO DO ESCRITOR
+      -->
+
+      <div class="modal-section">
+        <div class="modal-section-title">Reconhecimentos em Vida</div>
+        <p>✅ Descreva prêmios, cargos importantes, honrarias e reconhecimentos que o escritor recebeu durante a vida.</p>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Influência na Literatura Brasileira</div>
+        <p>✅ Quais escritores foram influenciados por ele? Como sua obra moldou a literatura que viria depois?</p>
+        <p>✅ Quais temas ou técnicas literárias ele introduziu ou popularizou no Brasil?</p>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Presente nos Dias de Hoje</div>
+        <p>✅ Suas obras são estudadas em escolas e vestibulares? Foram adaptadas para cinema, teatro ou TV? Fale sobre isso!</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--
+  ✅ Para adicionar um NOVO MODAL DE DESTAQUE:
+  1. Copie um bloco modal-overlay acima
+  2. Mude o id="modal-NOMEDESTAQUE"
+  3. Mude os botões onclick para closeModal('NOMEDESTAQUE')
+  4. Preencha o conteúdo
+  5. No HTML do destaque, mude onclick para openHighlight('NOMEDESTAQUE')
+-->
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL DE STORIES (TELA CHEIA) — NÃO EDITE ESTA ESTRUTURA
+     ══════════════════════════════════════════════════════════ -->
+<div class="story-modal-overlay" id="story-modal" onclick="handleStoryTap(event)">
+  <div class="story-modal-inner">
+
+    <!-- barra de progresso -->
+    <div class="story-progress-bar" id="story-progress-bar"></div>
+
+    <!-- cabeçalho do story -->
+    <div class="story-modal-header">
+      <div class="story-modal-avatar" id="story-modal-avatar">📖</div>
+      <div class="story-modal-name" id="story-modal-name">Nome do escritor</div>
+      <button class="story-modal-close" onclick="closeStoryModal(event)">✕</button>
+    </div>
+
+    <!-- conteúdo da mídia -->
+    <div class="story-media-container" id="story-media-container"></div>
+
+    <!-- legenda -->
+    <div class="story-modal-caption" id="story-modal-caption"></div>
+
+    <!-- áreas de toque (não clicáveis visualmente) -->
+    <div class="story-nav-tap prev" id="story-tap-prev"></div>
+    <div class="story-nav-tap next" id="story-tap-next"></div>
+
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
